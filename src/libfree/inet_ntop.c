@@ -1,3 +1,9 @@
+/*
+ * The contents of this file are included with the system,
+ * so no longer needed.
+ */
+#ifdef notdef
+
 /* This is from the BIND 4.9.4 release, modified to compile by itself */
 
 /* Copyright (c) 1996 by Internet Software Consortium.
@@ -17,7 +23,7 @@
  */
 
 #if defined(LIBC_SCCS) && !defined(lint)
-static char rcsid[] = "$Id: inet_ntop.c,v 8.5 1996/05/22 04:56:30 vixie Exp $";
+static char rcsid[] = "$Id: inet_ntop.c,v 1.1.1.1 2002/11/14 03:33:35 fenner Exp $";
 #endif /* LIBC_SCCS and not lint */
 
 #include <sys/param.h>
@@ -196,3 +202,5 @@ inet_ntop6(src, dst, size)
 	strcpy(dst, tmp);
 	return (dst);
 }
+
+#endif /* notdef */
