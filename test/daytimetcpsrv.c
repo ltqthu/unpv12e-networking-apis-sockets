@@ -5,13 +5,12 @@
 #include<sys/socket.h>
 #include<arpa/inet.h>
 #include<unistd.h>
-#include"../lib/unp.h"
+#include<time.h>
 
 #define MAXLINE 4096
 #define LISTENQ 1024
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
 	int					listenfd, connfd;
 	struct sockaddr_in	servaddr;
 	char				buff[MAXLINE];
@@ -30,28 +29,31 @@ int main(int argc, char **argv)
     memset(&servaddr, 0, sizeof(servaddr));
 	servaddr.sin_family      = AF_INET;
 	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-	servaddr.sin_port        = htons(13);	/* daytime server */
-
-	// Bind(listenfd, (struct sockaddr *) &servaddr, sizeof(servaddr));
+	servaddr.sin_port        = htons(13);
 
     if (bind(listenfd, (struct sockaddr *) &servaddr, sizeof(servaddr)) < 0) {
         printf("bind error\n");
         exit(1);
     }
 
-	// Listen(listenfd, LISTENQ);
 	if (listen(listenfd, LISTENQ) < 0) {
         printf("listen error\n");
         exit(1);
     }
 
 	for ( ; ; ) {
-		connfd = Accept(listenfd, (SA *) NULL, NULL);
-
+        connfd = accept(listenfd, (struct sockaddr*)NULL, NULL);
+        if (connfd < 0) {
+            printf("connfd < 0");
+        }
         ticks = time(NULL);
         snprintf(buff, sizeof(buff), "%.24s\r\n", ctime(&ticks));
-        Write(connfd, buff, strlen(buff));
+        if (write(connfd, buff, strlen(buff)) != strlen(buff)) {
+            printf("write error");
+        }
 
-		Close(connfd);
+	    if (close(connfd) == -1) {
+            printf("close error");
+        }
 	}
 }

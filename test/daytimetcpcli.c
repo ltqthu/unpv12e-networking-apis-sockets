@@ -9,16 +9,16 @@
 #define MAXLINE 4096
 
 int main(int argc, char **argv) {
-    int sockfd, n;
-    char recvline[MAXLINE+1];
-    struct sockaddr_in servaddr;
+    int                 sockfd, n;
+    char                recvline[MAXLINE+1];
+    struct sockaddr_in  servaddr;
     
     if (argc != 2) {
         printf("usage: a.out <IPaddress>\n");
         exit(1);
     }
 
-    if ( (sockfd= socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+    if ( (sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
         printf("socket error\n");
         exit(1);
     }
